@@ -17,7 +17,6 @@ const handler = NextAuth({
             return {
               ...response.data.user,
               accessToken: response.data.token.access,
-              refreshToken: response.data.token.refresh,
             };
           }
           return null;
@@ -32,14 +31,12 @@ const handler = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.accessToken = user.accessToken;
-        token.refreshToken = user.refreshToken;
         token.user = user;
       }
       return token;
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
       session.user = token.user;
       return session;
     },
